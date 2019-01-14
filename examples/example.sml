@@ -24,6 +24,6 @@ fun tos ZERO     = "zero"
 val p = Natfolds.fold su (Natfolds.identity)
 val k = Natfolds.unfold an 3
 val _ = print (Int.toString p)
-val _ = print (Natfolds.fold tos k) (* fold back to string to display. Note this
+val _ = print (Natfolds.hylo tos an 4) (* fold back to string to display. Note this
 is a fold after an unfold.*)
 
