@@ -6,8 +6,8 @@ src/sig/category.sml
 src/sig/folds.sml
 
 (* Implementations *)
-src/category.sml
 src/folds.sml
+src/fix.sml
 
 (* Examples *)
 examples/example.sml
