@@ -1,0 +1,13 @@
+$(SML_LIB)/basis/basis.mlb
+
+(* Signatures *)
+src/sig/functor.sml
+src/sig/category.sml
+src/sig/folds.sml
+
+(* Implementations *)
+src/category.sml
+src/folds.sml
+
+(* Examples *)
+examples/example.sml
