@@ -1,5 +1,5 @@
-datatype 'a nat  = ZERO | SUCC of 'a
-datatype 'a tree = TERMINUS | BRANCH of 'a * 'a * 'a
+datatype 'a nat   = ZERO | SUCC of 'a
+datatype 'a tree  = TERMINUS | BRANCH of 'a * 'a * 'a
 
 structure Tree : FUNCTOR =
   struct
@@ -43,13 +43,18 @@ fun br 0 = TERMINUS
 fun trs TERMINUS = "Terminus"
   | trs (BRANCH (l, x, r)) = "\n" ^ l ^ "\t"^ x ^ "\t" ^ r
 
+fun lefts TERMINUS = 0
+  | lefts (BRANCH (l, _, _)) = l + 1
+
 val p = Natfolds.cata su (Natfolds.identity)
 val k = Natfolds.ana an 3
 val q = Treefolds.cata tr (Treefolds.identity)
 val b = Treefolds.ana br 4
+val leftys = Treefolds.hylo lefts br 2
 val _ = print (Int.toString p)
 val _ = print (Int.toString q)
 val _ = print (Natfolds.hylo tos an 4) (* fold back to string to display. Note this
 is a fold after an unfold.*)
 val _ = print (Treefolds.hylo trs br 8)
+val _ = print (Int.toString leftys)
 
