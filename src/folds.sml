@@ -8,7 +8,8 @@ functor Folds(structure Category : CAT) : FOLDS =
     val identity = Category.inject Functor.identity 
     
     fun wrap f g h x = f (Category.Functor.fmap h (g x))
-    fun fold step x   = wrap step project (fold step) x
-    fun unfold step x = wrap inject step (unfold step) x
-    fun hylo alg coal x = fold alg (unfold coal x) 
+    
+    fun cata step x   = wrap step project (cata step) x
+    fun ana step x = wrap inject step (ana step) x
+    fun hylo alg coal x = cata alg (ana coal x) 
   end
