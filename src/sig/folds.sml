@@ -7,5 +7,6 @@ signature FOLDS =
     val cata : ('a Category.Functor.F -> 'a) -> Category.t -> 'a
     val ana : ('a -> 'a Category.Functor.F) -> 'a -> Category.t
     val hylo : ('a Category.Functor.F -> 'a) -> ('b -> 'b Category.Functor.F)
-    -> 'b -> 'a 
+    -> 'b -> 'a
+    val para : ((Category.t * 'a) Category.Functor.F -> 'a) -> Category.t -> 'a
   end
