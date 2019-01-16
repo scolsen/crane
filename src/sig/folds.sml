@@ -9,4 +9,5 @@ signature FOLDS =
     val hylo : ('a Category.Functor.F -> 'a) -> ('b -> 'b Category.Functor.F)
     -> 'b -> 'a
     val para : ((Category.t * 'a) Category.Functor.F -> 'a) -> Category.t -> 'a
+    val apo  : ('a -> ((Category.t, 'a) either) Category.Functor.F) -> 'a -> Category.t
   end

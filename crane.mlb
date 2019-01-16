@@ -1,5 +1,8 @@
 $(SML_LIB)/basis/basis.mlb
 
+(* Globals *)
+src/either.sml
+
 (* Signatures *)
 src/sig/functor.sml
 src/sig/category.sml
