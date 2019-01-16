@@ -10,7 +10,12 @@ functor Folds(structure Category : CAT) : FOLDS =
     fun cata step x   = step (Functor.fmap (cata step) (project x)) 
     fun ana step x    = inject (Functor.fmap (ana step) (step x))
     fun hylo alg coal x = alg (Functor.fmap (hylo alg coal) (coal x)) 
-    fun para alg x = alg (Functor.fmap (fn y => (y, (para alg y))) (project x))
+    fun para alg x = 
+      let
+        fun f y = (y, (para alg y)) 
+      in
+        alg (Functor.fmap f (project x))
+      end
     fun apo coal x = 
     let 
       fun f (Left y)  = y 
