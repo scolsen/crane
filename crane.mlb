@@ -5,13 +5,12 @@ src/either.sml
 
 (* Signatures *)
 src/sig/functor.sml
-src/sig/category.sml
+src/sig/fixpoint.sml
 src/sig/folds.sml
 
 (* Implementations *)
 src/folds.sml
 src/fix.sml
-src/cofree.sml
 
 (* Examples *)
-examples/example.sml
+examples/nat.sml

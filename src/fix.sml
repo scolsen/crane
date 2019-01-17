@@ -1,6 +1,6 @@
 (* Fix signature *)
 
-functor Fix(structure Functor : FUNCTOR) : CAT =
+functor Fix(structure Functor : FUNCTOR) : FIXPOINT =
   struct
     structure Functor = Functor 
     open Functor 

@@ -1,6 +1,6 @@
 (* "category" signature *)
 
-signature CAT =
+signature FIXPOINT =
   sig
     structure Functor : FUNCTOR
     type t

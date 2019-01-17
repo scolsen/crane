@@ -1,11 +1,11 @@
 (* folds functor implementation *)
 
-functor Folds(structure Category : CAT) : FOLDS =
+functor Folds(structure Fixpoint : FIXPOINT) : FOLDS =
   struct
-    structure Category = Category
-    open Category 
+    structure Fixpoint = Fixpoint
+    open Fixpoint 
     
-    val identity = Category.inject Functor.identity 
+    val identity = inject Functor.identity 
     
     fun cata step x   = step (Functor.fmap (cata step) (project x)) 
     fun ana step x    = inject (Functor.fmap (ana step) (step x))
