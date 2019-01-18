@@ -4,13 +4,15 @@ $(SML_LIB)/basis/basis.mlb
 src/either.sml
 
 (* Signatures *)
-src/sig/functor.sml
-src/sig/fixpoint.sml
+src/sig/types/functor.sml
+src/sig/types/fixpoint.sml
+src/sig/types/cofree.sml
 src/sig/folds.sml
 
 (* Implementations *)
+src/types/fix.sml
+src/types/cofree.sml
 src/folds.sml
-src/fix.sml
 
 (* Examples *)
 examples/nat.sml
