@@ -11,6 +11,7 @@ structure Nat : FUNCTOR =
 
 structure NatFix = Fix(structure Functor = Nat)
 structure Natfolds = Folds(structure Fixpoint = NatFix)
+structure Natchron = Chronic(structure Fix = NatFix)
 
 fun su ZERO     = 0
   | su (SUCC n) = n + 1
@@ -27,14 +28,22 @@ fun go ZERO = 0
 fun ap 0 = ZERO
   | ap n = (SUCC (Right (n - 1)))
 
+fun fib ZERO = 0
+  | fib (SUCC x) =
+      let val (fst, snd) = Natchron.C.project x in
+        case snd of
+          ZERO => 1
+        | _ => fib snd + fst
+      end
 
 val p = Natfolds.cata su (Natfolds.identity)
 val k = Natfolds.ana an 3
 val w = Natfolds.para go k
 val z = Natfolds.apo ap 5
+val r = Natchron.histo fib k
 
 val _ = print (Int.toString w)
 val _ = print (Int.toString p)
 val _ = print (Natfolds.hylo tos an 4) 
 val _ = print (Natfolds.cata tos z) 
-
+val _ = print (Int.toString r)

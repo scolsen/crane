@@ -1,11 +1,16 @@
-functor Chronic(structure Fixpoint : FIXPOINT) : CHRONIC =
+functor Chronic(structure Fix : FIXPOINT) : CHRONIC =
   struct
-    structure Fixpoint = Fixpoint
-    structure Cofree = Cofree(structure Functor = Fixpoint.Functor)
-    
-    type f = Fixpoint.Functor.F
-    type 'a c = 'a Cofree.t
-    type t = Fixpoint.t
+    structure Fix = Fix
+    structure C   = Cofree(structure Functor = Fix.Functor)
+    open Fix 
 
-    fun histo h x= 
+    
+    fun histo cv x = 
+      let
+        fun a c = let val (x, _) = C.project c in x end 
+        fun f x = C.inject (cv (map x), map x)
+        and map x = Functor.fmap f (project x)
+      in
+        a (f x) 
+      end 
   end

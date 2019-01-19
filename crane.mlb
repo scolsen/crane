@@ -8,11 +8,13 @@ src/sig/types/functor.sml
 src/sig/types/fixpoint.sml
 src/sig/types/cofree.sml
 src/sig/folds.sml
+src/sig/chronic.sml
 
 (* Implementations *)
 src/types/fix.sml
 src/types/cofree.sml
 src/folds.sml
+src/chronic.sml
 
 (* Examples *)
 examples/nat.sml

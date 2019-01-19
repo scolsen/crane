@@ -3,8 +3,8 @@ functor Cofree(structure Functor : FUNCTOR) : COFREE =
     structure Functor = Functor
     open Functor
  
-    datatype 'a t = Cofree of ('a * ('a F t)) F
+    datatype 'a t = Cofree of ('a * 'a t F)
    
-    fun inject f x = Cofree (x, fmap f x) 
-    fun project (Cofree x) = x
+    fun inject (x, y)       = Cofree (x, y)
+    fun project (Cofree xs) = xs
   end
