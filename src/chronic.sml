@@ -11,6 +11,6 @@ functor Chronic(structure Fix : FIXPOINT) : CHRONIC =
         fun f x = C.inject (cv (map x), map x)
         and map x = Functor.fmap f (project x)
       in
-        a (f x) 
+        C.present (f x) 
       end 
   end

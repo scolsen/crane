@@ -33,7 +33,7 @@ fun fib ZERO = 0
       let val (fst, snd) = Natchron.C.project x in
         case snd of
           ZERO => 1
-        | (SUCC x) => #1 (Natchron.C.project x) + fst
+        | (SUCC x) => Natchron.C.present x + fst
       end
 
 val p = Natfolds.cata su (Natfolds.identity)
