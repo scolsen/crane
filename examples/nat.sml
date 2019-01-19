@@ -33,7 +33,7 @@ fun fib ZERO = 0
       let val (fst, snd) = Natchron.C.project x in
         case snd of
           ZERO => 1
-        | _ => fib snd + fst
+        | (SUCC x) => #1 (Natchron.C.project x) + fst
       end
 
 val p = Natfolds.cata su (Natfolds.identity)
@@ -46,4 +46,4 @@ val _ = print (Int.toString w)
 val _ = print (Int.toString p)
 val _ = print (Natfolds.hylo tos an 4) 
 val _ = print (Natfolds.cata tos z) 
-val _ = print (Int.toString r)
+val _ = print (Int.toString (Natchron.histo fib (Natfolds.ana an 5)))
