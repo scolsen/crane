@@ -7,20 +7,20 @@ functor Folds(structure Fixpoint : FIXPOINT) : FOLDS =
     
     val identity = inject Functor.identity 
     
-    fun cata step x   = step (Functor.fmap (cata step) (project x)) 
-    fun ana step x    = inject (Functor.fmap (ana step) (step x))
-    fun hylo alg coal x = alg (Functor.fmap (hylo alg coal) (coal x)) 
+    fun cata step x = (step o Functor.fmap (cata step) o project) x 
+    fun ana step x = (inject o Functor.fmap (ana step) o step) x 
+    fun hylo alg coal x = (alg o Functor.fmap (hylo alg coal) o coal) x 
     fun para alg x = 
       let
         fun f y = (y, (para alg y)) 
       in
-        alg (Functor.fmap f (project x))
+        (alg o Functor.fmap f o project) x
       end
     fun apo coal x = 
     let 
       fun f (Left y)  = y 
         | f (Right y) = apo coal y 
     in
-      inject (Functor.fmap f (coal x)) 
+      (inject o Functor.fmap f o coal) x 
     end
   end
