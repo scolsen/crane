@@ -1,7 +1,17 @@
-functor Chronic(structure Fix : FIXPOINT) : CHRONIC =
+signature CHRONIC =
+  sig
+    structure Functor : FUNCTOR
+    structure Fix     : FIXPOINT
+    structure Cofree  : COFREE
+   
+    val histo : ('a Cofree.t Functor.t -> 'a) -> Fix.t -> 'a
+  end
+
+functor Chronic(structure Functor : FUNCTOR) : CHRONIC =
   struct
-    structure Fix = Fix
-    structure C   = Cofree(structure Functor = Fix.Functor)
+    structure Functor = Functor
+    structure Fix = Fixpoint(structure Functor = Functor)
+    structure Cofree = Cofree(structure Functor = Functor)
     open Fix 
 
     
