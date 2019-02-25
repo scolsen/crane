@@ -1,26 +1,49 @@
-(* folds functor implementation *)
+(* Folds signature *)
 
-functor Folds(structure Fixpoint : FIXPOINT) : FOLDS =
+signature FOLDS = 
+  sig
+    structure Functor : FUNCTOR
+    
+    type fix
+    type 'a cofree
+    type 'a free
+    type ('a, 'b) product
+    type ('a, 'b) coproduct
+
+    (* Iterative *)
+    val cata : ('a f -> 'a) -> fix -> 'a
+    val ana  : ('a -> 'a f) -> 'a -> fix
+    val hylo : ('a f -> 'a) -> ('b -> 'b f) -> 'b -> 'a
+    val meta : ('b -> 'b f) -> ('a f -> 'a) -> fix -> fix
+
+    (* Primitive *)
+    val para : ((fix, 'a) product f -> 'a) -> fix -> 'a
+    val apo  : ('a -> (fix, 'a) coproduct f) -> 'a -> fix
+
+    (* Chronic *)
+    val histo : ('a cofree f -> 'a) -> fix -> 'a
+  end 
+
+functor FOLDS(structure Functor : FUNCTOR) : FOLDS =
   struct
-    structure Fixpoint = Fixpoint
-    open Fixpoint 
-    
-    val identity = inject Functor.identity 
-    
-    fun cata step x = (step o Functor.fmap (cata step) o project) x 
-    fun ana step x = (inject o Functor.fmap (ana step) o step) x 
-    fun hylo alg coal x = (alg o Functor.fmap (hylo alg coal) o coal) x 
-    fun para alg x = 
-      let
-        fun f y = (y, (para alg y)) 
-      in
-        (alg o Functor.fmap f o project) x
-      end
-    fun apo coal x = 
-    let 
-      fun f (Left y)  = y 
-        | f (Right y) = apo coal y 
-    in
-      (inject o Functor.fmap f o coal) x 
-    end
+    structure Functor = Functor
+    structure Fix     = Fixpoint(structure Functor = Functor)
+    structure Free    = Free(structure Functor = Functor)
+    structure Cofree  = Cofree(structure Functor = Functor)
+   
+    type fix = Fix.t
+    type 'a cofree = 
+
+    (* Iterative *) 
+    fun cata al x    = (al o Functor.fmap (cata al) o project) x 
+    fun ana co x     = (inject o Functor.fmap (ana co) o co) x 
+    fun hylo al co x = (al o Functor.fmap (hylo al co) o co) x    
+    fun meta co al x = (ana co o cata al) x
+
+    (* Primitive *)
+    fun para al x = (al o Functor.fmap (&o (para al)) o project) x
+    fun apo co x  = (inject o Functor.fmap (|o (apo co)) o co) x
+
+    (* Chronic *)
+    fun histo al x = id 
   end

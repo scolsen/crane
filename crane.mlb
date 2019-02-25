@@ -1,20 +1,10 @@
 $(SML_LIB)/basis/basis.mlb
 
 (* Globals *)
-src/either.sml
+src/util.sml
+src/types/either.sml
+src/types/functor.sml
+src/recursives.sml
 
-(* Signatures *)
-src/sig/types/functor.sml
-src/sig/types/fixpoint.sml
-src/sig/types/cofree.sml
-src/sig/folds.sml
-src/sig/chronic.sml
-
-(* Implementations *)
-src/types/fix.sml
-src/types/cofree.sml
-src/folds.sml
-src/chronic.sml
-
-(* Examples *)
-examples/nat.sml
+(* Examples 
+examples/nat.sml *)
