@@ -1,17 +1,24 @@
 signature PRIMITIVE =
   sig
     structure Functor : FUNCTOR
-    structure Fix     : FIXPOINT
+    structure Fix     : FIX
+    sharing type 'a Fix.f = 'a Functor.f
+    type 'a f = 'a Fix.f
+    type fix = Fix.fix
 
-    val para : ((Fix.t, 'a) product Functor.t -> 'a) -> Fix.t -> 'a
-    val apo  : ('a -> (Fix.t, 'a) either Functor.t) -> 'a -> Fix.t
+    val para : ((fix, 'a) f -> 'a) -> fix -> 'a
+    val apo  : ('a -> ((fix, 'a) coproduct) f) -> 'a -> fix
   end
 
-functor Primitive(structure Functor : FUNCTOR) : PRIMITIVE =
+functor Primitive(Functor : FUNCTOR) : PRIMITIVE =
   struct
     structure Functor = Functor
-    structure Fix = Fixpoint(structure Functor = Functor)
+    structure Fix = Fix(Functor)
+    open Functor Fix
 
-    fun para al x = (al o Functor.fmap (&o (para al)) o project) x
+    fun para (f:) (x:fix)
+
+    fun para f x = (al o Functor.fmap (&o (para al)) o project) x
+    
     fun apo co x  = (inject o Functor.fmap (|o (apo co)) o co) x
   end
